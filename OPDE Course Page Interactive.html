@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IoT in Operations — Week Overview</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: 'Trebuchet MS', sans-serif; color: #2b2b2b; background: #f4f6f9; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+
+  a { color: #1a4783; }
+  .wrap a, .pdf-fallback a { text-decoration: underline; }
+  :focus-visible { outline: 3px solid #00a3e0; outline-offset: 2px; }
+
+  .hero { min-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 24px; background: #13294b; color: #ffffff; position: relative; }
+  .hero .eyebrow { font-size: 11pt; letter-spacing: 4px; color: #a9cdec; margin-bottom: 22px; text-transform: uppercase; }
+  .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); margin: 0; line-height: 1.05; }
+  .accent { width: 90px; height: 4px; background: #00a3e0; border-radius: 2px; }
+  .hero .sub { font-size: clamp(1rem, 3vw, 1.6rem); color: #cfe0f2; }
+  .scroll-cue { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; color: #a9cdec; font-size: 11pt; }
+  .scroll-cue .chev { display: block; font-size: 20pt; line-height: 1; margin-top: 4px; animation: bob 1.6s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+
+  .section { padding: 78px 24px; }
+  .section.dark { background: #13294b; color: #ffffff; }
+  .wrap { width: 100%; max-width: 960px; margin: 0 auto; }
+  .topbar { height: 6px; background: linear-gradient(to right, #13294b 75%, #ffffff); }
+  .topbar.rev { background: linear-gradient(to right, #00a3e0, #1d4f91 60%, #13294b); }
+
+  .panel { background: #ffffff; border-radius: 12px; border: 1px solid #d9dee6; border-top: 6px solid #1a4783; padding: 34px; }
+  .head { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+  .badge { width: 52px; height: 52px; flex: 0 0 auto; border-radius: 12px; background: #1a4783; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 24pt; }
+  .head h2 { color: #1a4783; font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0; }
+  .lede { font-size: 13pt; line-height: 1.75; margin: 0 0 22px 0; }
+  .artifact { background: #f0f7ff; padding: 22px; border-radius: 8px; border-left: 4px solid #00a3e0; }
+  .artifact h3 { color: #1a4783; font-size: 15pt; margin: 0 0 12px 0; }
+  .placeholder { background: #fff7e6; padding: 14px; border-radius: 8px; border-left: 4px solid #e0a800; font-size: 12pt; }
+
+  .pill { display: inline-flex; align-items: center; background: #13294b; color: #ffffff; padding: 8px 22px; border-radius: 12px; margin: 0 0 22px 0; font-size: clamp(1.4rem, 3.5vw, 2rem); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .card { background: #ffffff; padding: 22px; border-radius: 10px; border: 1px solid #d9dee6; }
+  .card.a { border-left: 5px solid #13294b; }
+  .card.b { border-left: 5px solid #1d4f91; }
+  .card .head { margin-bottom: 14px; }
+  .card .icon { width: 42px; height: 42px; flex: 0 0 auto; border-radius: 10px; background: #eef3fa; display: flex; align-items: center; justify-content: center; font-size: 20pt; }
+  .card h3 { color: #1a4783; font-size: 15pt; margin: 0; }
+  .card ul { font-size: 12pt; padding-left: 20px; margin: 0; line-height: 1.9; }
+
+  .lo-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .lo-head .ring { width: 50px; height: 50px; flex: 0 0 auto; border-radius: 8px; border: 2px solid #1a4783; display: flex; align-items: center; justify-content: center; font-size: 22pt; }
+  .lo-head h2 { margin: 0; font-size: clamp(1.4rem, 3.5vw, 2rem); color: #1a4783; }
+  .hint { display: inline-flex; align-items: center; gap: 10px; font-size: 11.5pt; color: #1a4783; background: #eaf3ff; border: 1px dashed #6a9cc9; padding: 10px 16px; border-radius: 24px; margin: 0 0 22px 0; }
+  .hint .plus { width: 20px; height: 20px; flex: 0 0 auto; border-radius: 50%; background: #1a4783; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 13pt; line-height: 1; }
+
+  .lo { list-style: none; padding: 0; margin: 0; }
+  .lo li { margin-bottom: 14px; }
+  details.acc { background: #fff; border-radius: 8px; border: 1px solid #d9dee6; overflow: hidden; }
+  details.acc.c1 { border-left: 6px solid #13294b; }
+  details.acc.c2 { border-left: 6px solid #1d4f91; }
+  details.acc.c3 { border-left: 6px solid #3f5f7f; }
+  details.acc summary { cursor: pointer; padding: 15px; display: flex; align-items: center; gap: 12px; list-style: none; min-height: 44px; transition: background .18s ease; }
+  details.acc summary::-webkit-details-marker { display: none; }
+  details.acc summary:hover { background: #f5f8fc; }
+  details.acc summary:focus-visible { outline: 3px solid #1a4783; outline-offset: -3px; }
+  .num { display: inline-flex; flex: 0 0 auto; width: 32px; height: 32px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; font-size: 12pt; }
+  .c1 .num { background: #13294b; } .c2 .num { background: #1d4f91; } .c3 .num { background: #3f5f7f; }
+  .acc summary .label { font-size: 12pt; flex: 1 1 auto; }
+  .acc .body { padding: 0 15px 16px 59px; margin: 0; font-size: 12pt; line-height: 1.7; }
+
+  .toggle { position: relative; width: 32px; height: 32px; flex: 0 0 auto; border-radius: 50%; background: #13294b; transition: background .18s ease, transform .2s ease; }
+  .c2 .toggle { background: #1d4f91; } .c3 .toggle { background: #3f5f7f; }
+  .toggle::before, .toggle::after { content: ''; position: absolute; background: #ffffff; border-radius: 1px; }
+  .toggle::before { width: 14px; height: 2px; top: 15px; left: 9px; }
+  .toggle::after { width: 2px; height: 14px; top: 9px; left: 15px; transition: transform .22s ease, opacity .22s ease; }
+  details[open] .toggle { transform: rotate(180deg); }
+  details[open] .toggle::after { transform: scaleY(0); opacity: 0; }
+
+  .kicker { display: block; text-transform: uppercase; letter-spacing: 3px; font-size: 10.5pt; color: #0a5f85; margin-bottom: 10px; }
+  .sec-title { color: #1a4783; font-size: clamp(1.5rem, 4vw, 2.2rem); margin: 0 0 14px 0; }
+  .embed-video { position: relative; width: 100%; height: 0; padding-bottom: 56.25%; border-radius: 12px; overflow: hidden; border: 1px solid #c9d0da; background: #000; margin-top: 8px; }
+  .embed-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .embed-pdf { width: 100%; height: 70vh; min-height: 460px; border: 1px solid #c9d0da; border-radius: 12px; background: #fff; margin-top: 8px; }
+  .pdf-fallback { font-size: 11pt; margin: 10px 0 0 0; }
+  .ta-block { margin-top: 28px; }
+  .ta-title { color: #1a4783; font-size: 15pt; margin: 0 0 16px 0; }
+  .takeaways { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .takeaway { background: #ffffff; border: 1px solid #d9dee6; border-top: 4px solid #00a3e0; border-radius: 10px; padding: 20px; }
+  .takeaway .tnum { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: #1a4783; color: #ffffff; font-size: 13pt; margin-bottom: 12px; }
+  .takeaway h4 { margin: 0 0 6px 0; color: #1a4783; font-size: 13pt; }
+  .takeaway p { margin: 0; font-size: 11.5pt; line-height: 1.6; color: #2b2b2b; }
+
+  /* invisible marker that unlocks the NEXT section once scrolled to */
+  .scroll-gate { width: 100%; height: 2px; margin-top: 18vh; }
+
+  [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  [data-reveal].reveal-left { transform: translateX(-46px); }
+  [data-reveal].in-view { opacity: 1; transform: none; }
+
+  details.acc.c1[data-reveal] { transition-delay: 0s; }
+  details.acc.c2[data-reveal] { transition-delay: .16s; }
+  details.acc.c3[data-reveal] { transition-delay: .32s; }
+  .takeaways [data-reveal]:nth-child(1) { transition-delay: 0s; }
+  .takeaways [data-reveal]:nth-child(2) { transition-delay: .12s; }
+  .takeaways [data-reveal]:nth-child(3) { transition-delay: .24s; }
+
+  .gate { padding: 74px 24px; text-align: center; color: #ffffff; background: linear-gradient(135deg, #13294b, #1d4f91); }
+  .gate h2 { margin: 0 0 10px 0; font-size: clamp(1.5rem, 4vw, 2.2rem); }
+  .gate p { margin: 0 auto; max-width: 560px; font-size: 12.5pt; line-height: 1.6; color: #cfe0f2; }
+  .continue-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 15px 42px; min-height: 44px; font-family: inherit; font-size: 14pt; font-weight: bold; color: #0b1730; background: #00a3e0; border: 0; border-radius: 30px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.28); transition: transform .15s ease, background .2s ease, box-shadow .2s ease; }
+  .continue-btn:hover { transform: translateY(-2px); box-shadow: 0 9px 24px rgba(0,0,0,.34); }
+  .continue-btn:focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; }
+  .gate.done .continue-btn { background: #78c85f; cursor: default; transform: none; box-shadow: none; }
+  .lock-note { margin-top: 16px !important; font-size: 10.5pt; color: #cfe0f2; }
+  .gate.done .lock-note { display: none; }
+  .locked { display: none; }
+  .hidden { display: none !important; }
+  .continue-btn:disabled { background: #5f7ba3; color: #eaf1fa; cursor: not-allowed; box-shadow: none; transform: none; }
+  .continue-btn:disabled:hover { transform: none; box-shadow: none; }
+
+  .confirm-box { text-align: center; margin-top: 26px; }
+  .confirm-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 34px; min-height: 44px; font-family: inherit; font-size: 12.5pt; font-weight: bold; color: #ffffff; background: #1a4783; border: 0; border-radius: 28px; cursor: pointer; box-shadow: 0 5px 14px rgba(0,0,0,.16); transition: transform .15s ease, background .2s ease, box-shadow .2s ease; }
+  .confirm-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,.22); }
+  .confirm-btn:focus-visible { outline: 3px solid #1a4783; outline-offset: 3px; }
+  .confirm-btn.done { background: #256b2b; cursor: default; transform: none; box-shadow: none; }
+  .confirm-note { font-size: 10.5pt; color: #55647a; margin: 12px 0 0 0; }
+  .confirm-box.done .confirm-note { display: none; }
+  .scroll-hint { text-align: center; font-size: 10.5pt; color: #6b7a8f; margin: 14px 0 0 0; }
+  .scroll-hint .chev { display: inline-block; margin-left: 4px; animation: bob 1.6s ease-in-out infinite; }
+
+  .kc { background: #ffffff; border: 1px solid #d9dee6; border-top: 6px solid #1a4783; border-radius: 12px; padding: 32px; }
+  .kc h2.sec-title { margin: 0 0 6px 0; }
+  .kc-legend { font-size: 14pt; font-weight: bold; color: #13294b; margin: 0 0 6px 0; padding: 0; line-height: 1.4; }
+  .kc-instr { font-size: 10.5pt; letter-spacing: 1.5px; text-transform: uppercase; color: #0a5f85; font-weight: bold; margin: 0 0 20px 0; }
+  .kc fieldset { border: 0; margin: 0; padding: 0; }
+  .kc-opt { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border: 1px solid #d9dee6; border-radius: 10px; margin-bottom: 10px; cursor: pointer; min-height: 44px; transition: background .15s ease, border-color .15s ease; }
+  .kc-opt:hover { background: #f5f8fc; }
+  .kc-opt input { width: 20px; height: 20px; margin: 1px 0 0 0; flex: 0 0 auto; accent-color: #1a4783; }
+  .kc-opt .opt-text { font-size: 12pt; line-height: 1.5; }
+  .kc-opt.correct { border-color: #256b2b; background: #eef7ee; }
+  .kc-opt.incorrect { border-color: #b3261e; background: #fdeceb; }
+  .kc-opt.missed { border-color: #256b2b; background: #eef7ee; border-style: dashed; }
+  .kc-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .kc-btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 30px; min-height: 44px; font-family: inherit; font-size: 12pt; font-weight: bold; color: #fff; background: #1a4783; border: 0; border-radius: 26px; cursor: pointer; transition: transform .15s ease, background .2s ease; }
+  .kc-btn:hover { transform: translateY(-2px); }
+  .kc-btn:focus-visible { outline: 3px solid #1a4783; outline-offset: 3px; }
+  .kc-btn:disabled { background: #5f7ba3; cursor: default; transform: none; }
+  .kc-reset { background: #e6ecf4; color: #1a4783; }
+  .kc-reset:hover { background: #d9e2ee; }
+  .kc-feedback { margin: 16px 0 0 0; font-size: 12pt; font-weight: bold; }
+  .kc-feedback.ok { color: #256b2b; }
+  .kc-feedback.no { color: #b3261e; }
+
+  .fs-btn { position: fixed; top: 14px; right: 14px; z-index: 1000; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: #ffffff; background: rgba(19,41,75,0.85); border: 1px solid rgba(255,255,255,0.4); border-radius: 10px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.25); transition: background .15s ease, transform .15s ease; }
+  .fs-btn:hover { background: #13294b; transform: translateY(-1px); }
+  .fs-btn:focus-visible { outline: 3px solid #00a3e0; outline-offset: 2px; }
+  .fs-btn .ic-compress { display: none; }
+  .fs-btn.is-full .ic-expand { display: none; }
+  .fs-btn.is-full .ic-compress { display: inline; }
+
+  @media (max-width: 640px) {
+    .hero { min-height: 82vh; padding: 48px 18px; }
+    .section { padding: 48px 18px; }
+    .gate { padding: 54px 18px; }
+    .panel, .kc { padding: 22px; }
+    .grid, .takeaways { grid-template-columns: 1fr; }
+    .acc .body { padding-left: 15px; }
+    .embed-pdf { height: 58vh; min-height: 340px; }
+    .fs-btn { top: 10px; right: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .scroll-cue .chev, .scroll-hint .chev { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+  <button id="fsBtn" class="fs-btn" type="button" aria-label="Enter full screen" aria-pressed="false" title="Full screen">
+    <svg class="ic-expand" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 3H3v5 M16 3h5v5 M21 16v5h-5 M3 16v5h5"/></svg>
+    <svg class="ic-compress" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h5V3 M21 8h-5V3 M16 21v-5h5 M8 21v-5H3"/></svg>
+  </button>
+
+  <div class="topbar rev"></div>
+  <section class="hero">
+    <div data-reveal>
+      <div class="eyebrow"><strong>Department of Operations &amp; Management</strong></div>
+      <h1><strong>IoT in Operations</strong></h1>
+      <div class="accent" style="margin: 22px auto 24px;"></div>
+      <div class="sub"><strong>Module # &nbsp;|&nbsp; Week # &nbsp;|&nbsp; Overview</strong></div>
+    </div>
+    <div class="scroll-cue"><strong>Scroll to begin</strong><span class="chev" aria-hidden="true">&#8964;</span></div>
+  </section>
+
+  <section class="section">
+    <div class="wrap" data-reveal>
+      <div class="panel">
+        <div class="head">
+          <div class="badge" aria-hidden="true">&#128075;</div>
+          <h2><strong>Welcome</strong></h2>
+        </div>
+        <p class="lede">This chapter provides a practitioner's perspective on Smart Manufacturing, framing it not as a one-time technology implementation, but as an ongoing journey of continuous improvement driven by vision, strategy, and disciplined execution.</p>
+        <div class="artifact">
+          <h3><strong>Interactive Artifact</strong></h3>
+          <div class="placeholder"><strong>[PLACEHOLDER &mdash; INSTRUCTOR TO PROVIDE: Interactive artifact content, embed code, link, or description goes here.]</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#eef2f7;">
+    <div class="wrap">
+      <div data-reveal><h2 class="pill"><strong>What to Do</strong></h2></div>
+      <div class="grid">
+        <div class="card a" data-reveal>
+          <div class="head">
+            <div class="icon" aria-hidden="true">&#128218;</div>
+            <h3><strong>Learning Materials</strong></h3>
+          </div>
+          <ul>
+            <li>Chapter 1</li>
+            <li>Review IoT in Operations PowerPoint</li>
+            <li>Watch IoT in Operations Introduction Video</li>
+          </ul>
+        </div>
+        <div class="card b" data-reveal style="transition-delay:.15s;">
+          <div class="head">
+            <div class="icon" aria-hidden="true">&#9989;</div>
+            <h3><strong>Tasks to Complete</strong></h3>
+          </div>
+          <ul>
+            <li>Student Introductions</li>
+            <li>Read Chapter 1</li>
+            <li>Chapter 1 Quiz</li>
+            <li>Week 1 Review Assignment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap" data-reveal>
+      <div class="lo-head">
+        <div class="ring" aria-hidden="true">&#127919;</div>
+        <h2><strong>By the end of this week, you'll be able to&hellip;</strong></h2>
+      </div>
+      <p class="hint"><span class="plus" aria-hidden="true">+</span> Select each objective to expand it &mdash; select again to collapse.</p>
+      <ul class="lo">
+        <li>
+          <details class="acc c1 reveal-left" data-reveal>
+            <summary>
+              <span class="num" aria-hidden="true">1</span>
+              <span class="label"><strong>Learning Objective 1</strong></span>
+              <span class="toggle" aria-hidden="true"></span>
+            </summary>
+            <p class="body">1&ndash;2 sentences describing the LO.</p>
+          </details>
+        </li>
+        <li>
+          <details class="acc c2 reveal-left" data-reveal>
+            <summary>
+              <span class="num" aria-hidden="true">2</span>
+              <span class="label"><strong>Learning Objective 2</strong></span>
+              <span class="toggle" aria-hidden="true"></span>
+            </summary>
+            <p class="body">1&ndash;2 sentences describing the LO.</p>
+          </details>
+        </li>
+        <li>
+          <details class="acc c3 reveal-left" data-reveal>
+            <summary>
+              <span class="num" aria-hidden="true">3</span>
+              <span class="label"><strong>Learning Objective 3</strong></span>
+              <span class="toggle" aria-hidden="true"></span>
+            </summary>
+            <p class="body">1&ndash;2 sentences describing the LO.</p>
+          </details>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="gate" data-reveal>
+    <h2><strong>Nice work so far.</strong></h2>
+    <p>You've reviewed this week's objectives. Select <strong>Continue</strong> to unlock the reading, the video, and the rest of the module.</p>
+    <button id="continueBtn" class="continue-btn" type="button" data-unlocks="grp-reading" disabled>Continue &#9656;</button>
+    <p class="lock-note" id="loNote" aria-live="polite">Expand and read all three objectives above to continue. <span id="loCount">0</span> of 3 opened.</p>
+  </section>
+
+  <section class="section locked grp-reading" data-after-gate style="background:#eef2f7;">
+    <div class="wrap" data-reveal>
+      <span class="kicker"><strong>Course Reading</strong></span>
+      <h2 class="sec-title"><strong>Foundational Reading</strong></h2>
+      <p class="lede">Before moving on, review the reading below. It sets the vocabulary and framing we'll build on throughout the module &mdash; skim it once for the big picture, then read closely for the details. Use the viewer to scroll through the document, or open it in a new tab if you'd prefer a full-screen view.</p>
+      <iframe class="embed-pdf" src="https://www.buds.com.ua/images/Lorem_ipsum.pdf" title="Foundational reading (PDF document)"></iframe>
+      <p class="pdf-fallback">Trouble viewing it here? <a href="https://www.buds.com.ua/images/Lorem_ipsum.pdf" target="_blank" rel="noopener"><strong>Open the reading in a new tab.</strong></a></p>
+      <div class="confirm-box">
+        <button class="confirm-btn" type="button" data-reveal-takeaways>I have read the document</button>
+        <p class="confirm-note">Confirm you've read the document to reveal the three key takeaways.</p>
+      </div>
+      <div class="ta-block hidden">
+        <h3 class="ta-title">Key Takeaways from the Reading</h3>
+        <div class="takeaways">
+          <div class="takeaway" data-reveal>
+            <div class="tnum" aria-hidden="true">1</div>
+            <h4>Key Takeaway 1</h4>
+            <p>[Replace with the first main point students should carry away from the reading.]</p>
+          </div>
+          <div class="takeaway" data-reveal>
+            <div class="tnum" aria-hidden="true">2</div>
+            <h4>Key Takeaway 2</h4>
+            <p>[Replace with the second main point students should carry away from the reading.]</p>
+          </div>
+          <div class="takeaway" data-reveal>
+            <div class="tnum" aria-hidden="true">3</div>
+            <h4>Key Takeaway 3</h4>
+            <p>[Replace with the third main point students should carry away from the reading.]</p>
+          </div>
+        </div>
+        <p class="scroll-hint">Keep scrolling to continue<span class="chev" aria-hidden="true">&#8964;</span></p>
+        <div class="scroll-gate" data-scroll-unlock="grp-video" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section locked grp-video">
+    <div class="wrap" data-reveal>
+      <span class="kicker"><strong>Watch</strong></span>
+      <h2 class="sec-title"><strong>Introduction Video</strong></h2>
+      <p class="lede">Watch the short video below for an overview that ties the reading to real-world practice. As you watch, keep the module's learning objectives in mind and note where the concepts show up in action.</p>
+      <div class="embed-video">
+        <iframe src="https://www.youtube.com/embed/tYARyQLq8RU?si=_MpQ703uiZADqNyg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+      <p class="pdf-fallback">Video not loading? <a href="https://www.youtube.com/watch?v=UEQSkaqrMZA" target="_blank" rel="noopener"><strong>Watch it on YouTube in a new tab.</strong></a></p>
+      <div class="confirm-box">
+        <button class="confirm-btn" type="button" data-reveal-takeaways>I have watched the video</button>
+        <p class="confirm-note">Confirm you've watched the video to reveal the three key takeaways.</p>
+      </div>
+      <div class="ta-block hidden">
+        <h3 class="ta-title">Key Takeaways from the Video</h3>
+        <div class="takeaways">
+          <div class="takeaway" data-reveal>
+            <div class="tnum" aria-hidden="true">1</div>
+            <h4>Key Takeaway 1</h4>
+            <p>[Replace with the first main point students should carry away from the video.]</p>
+          </div>
+          <div class="takeaway" data-reveal>
+            <div class="tnum" aria-hidden="true">2</div>
+            <h4>Key Takeaway 2</h4>
+            <p>[Replace with the second main point students should carry away from the video.]</p>
+          </div>
+          <div class="takeaway" data-reveal>
+            <div class="tnum" aria-hidden="true">3</div>
+            <h4>Key Takeaway 3</h4>
+            <p>[Replace with the third main point students should carry away from the video.]</p>
+          </div>
+        </div>
+        <p class="scroll-hint">Keep scrolling to continue<span class="chev" aria-hidden="true">&#8964;</span></p>
+        <div class="scroll-gate" data-scroll-unlock="grp-knowledge" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section locked grp-knowledge" style="background:#eef2f7;">
+    <div class="wrap" data-reveal>
+      <div class="kc">
+        <h2 class="sec-title">Knowledge Check</h2>
+        <fieldset aria-describedby="kcInstr">
+          <legend class="kc-legend">Which of the following tasks should you complete during this module?</legend>
+          <p class="kc-instr" id="kcInstr">Select all that apply</p>
+          <label class="kc-opt" data-correct="true"><input type="checkbox"><span class="opt-text">Student Introductions</span></label>
+          <label class="kc-opt" data-correct="true"><input type="checkbox"><span class="opt-text">Read Chapter 1</span></label>
+          <label class="kc-opt" data-correct="true"><input type="checkbox"><span class="opt-text">Chapter 1 Quiz</span></label>
+          <label class="kc-opt" data-correct="true"><input type="checkbox"><span class="opt-text">Week 1 Review Assignment</span></label>
+          <label class="kc-opt" data-correct="false"><input type="checkbox"><span class="opt-text">Submit the Final Capstone Project</span></label>
+        </fieldset>
+        <div class="kc-actions">
+          <button class="kc-btn" id="kcCheck" type="button">Check my answer</button>
+          <button class="kc-btn kc-reset" id="kcReset" type="button" hidden>Try again</button>
+        </div>
+        <p class="kc-feedback" id="kcFeedback" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="topbar rev locked grp-jumping"></div>
+  <section class="section dark locked grp-jumping" style="text-align:center;">
+    <div class="wrap" data-reveal style="max-width:820px;">
+      <h2 style="font-size:clamp(2rem,6vw,3.2rem); margin:0 0 18px 0;"><strong>Jumping In</strong></h2>
+      <div class="accent" style="margin:0 auto 26px;"></div>
+      <p style="font-size:14pt; line-height:1.7; color:#cfe0f2; margin:0;">Provide context for the learner moving into the module's content.</p>
+      <p style="margin:34px 0 0 0; font-size:15pt; color:#ffffff;"><strong><em>Department of Operations &amp; Management</em></strong></p>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll('[data-reveal]');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('in-view'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+
+    function unlockGroup(cls) {
+      var els = document.querySelectorAll('.' + cls);
+      els.forEach(function (el) { el.classList.remove('locked'); });
+      return els.length ? els[0] : null;
+    }
+    function focusReveal(el) {
+      if (!el) return;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      el.setAttribute('tabindex', '-1');
+      el.focus({ preventScroll: true });
+    }
+
+    (function () {
+      var contBtn = document.getElementById('continueBtn');
+      var accs = Array.prototype.slice.call(document.querySelectorAll('details.acc'));
+      if (!contBtn || !accs.length) return;
+      var opened = {};
+      var countEl = document.getElementById('loCount');
+      var noteEl = document.getElementById('loNote');
+      accs.forEach(function (d, i) {
+        d.addEventListener('toggle', function () {
+          if (d.open) opened[i] = true;
+          var n = Object.keys(opened).length;
+          if (countEl) countEl.textContent = n;
+          if (n >= accs.length) {
+            contBtn.disabled = false;
+            if (noteEl) noteEl.textContent = 'All objectives reviewed \u2014 you may continue.';
+          }
+        });
+      });
+    })();
+
+    (function () {
+      var btn = document.getElementById('continueBtn');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        if (btn.disabled) return;
+        var gate = btn.closest('.gate');
+        if (gate) gate.classList.add('done');
+        btn.textContent = 'Unlocked \u2713';
+        btn.disabled = true;
+        focusReveal(unlockGroup(btn.getAttribute('data-unlocks')));
+      });
+    })();
+
+    (function () {
+      document.querySelectorAll('.confirm-btn[data-reveal-takeaways]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (btn.disabled) return;
+          var sec = btn.closest('section');
+          var t = sec ? sec.querySelector('.ta-block.hidden') : null;
+          if (t) t.classList.remove('hidden');
+          var box = btn.closest('.confirm-box');
+          if (box) box.classList.add('done');
+          btn.classList.add('done');
+          btn.textContent = '\u2713 Confirmed';
+          btn.disabled = true;
+          if (t) t.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+        });
+      });
+    })();
+
+    /* Scroll gates: unlock the NEXT section once its marker enters the viewport.
+       Fixed: no negative bottom margin, so the trigger doesn't require scroll
+       room that doesn't exist yet (the next section is hidden until unlocked). */
+    (function () {
+      var gates = document.querySelectorAll('[data-scroll-unlock]');
+      if (!gates.length) return;
+      if (!('IntersectionObserver' in window)) {
+        gates.forEach(function (el) { unlockGroup(el.getAttribute('data-scroll-unlock')); });
+        return;
+      }
+      var sg = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            unlockGroup(e.target.getAttribute('data-scroll-unlock'));
+            sg.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px' });
+      gates.forEach(function (el) { sg.observe(el); });
+    })();
+
+    (function () {
+      var check = document.getElementById('kcCheck');
+      if (!check) return;
+      var reset = document.getElementById('kcReset');
+      var fb = document.getElementById('kcFeedback');
+      var opts = Array.prototype.slice.call(document.querySelectorAll('.kc-opt'));
+
+      check.addEventListener('click', function () {
+        var allRight = true;
+        opts.forEach(function (o) {
+          var input = o.querySelector('input');
+          var correct = o.getAttribute('data-correct') === 'true';
+          o.classList.remove('correct', 'incorrect', 'missed');
+          if (input.checked && correct) { o.classList.add('correct'); }
+          else if (input.checked && !correct) { o.classList.add('incorrect'); allRight = false; }
+          else if (!input.checked && correct) { o.classList.add('missed'); allRight = false; }
+        });
+        if (allRight) {
+          fb.textContent = 'Correct! These are all the tasks to complete during this module.';
+          fb.className = 'kc-feedback ok';
+          opts.forEach(function (o) { o.querySelector('input').disabled = true; });
+          check.disabled = true;
+          if (reset) reset.hidden = true;
+          focusReveal(unlockGroup('grp-jumping'));
+        } else {
+          fb.textContent = 'Not quite. Green marks a task you should select; red marks a choice that isn\u2019t part of this module. Review the Tasks to Complete and try again.';
+          fb.className = 'kc-feedback no';
+          if (reset) reset.hidden = false;
+        }
+      });
+
+      if (reset) {
+        reset.addEventListener('click', function () {
+          opts.forEach(function (o) {
+            o.classList.remove('correct', 'incorrect', 'missed');
+            var input = o.querySelector('input');
+            input.checked = false;
+            input.disabled = false;
+          });
+          fb.textContent = '';
+          fb.className = 'kc-feedback';
+          check.disabled = false;
+          reset.hidden = true;
+        });
+      }
+    })();
+
+    (function () {
+      var btn = document.getElementById('fsBtn');
+      if (!btn) return;
+      var root = document.documentElement;
+      var canFS = !!(root.requestFullscreen || root.webkitRequestFullscreen);
+      if (!canFS) { btn.setAttribute('hidden', ''); return; }
+
+      function isFull() { return document.fullscreenElement || document.webkitFullscreenElement; }
+      function enter() { (root.requestFullscreen || root.webkitRequestFullscreen).call(root); }
+      function exit() { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+
+      btn.addEventListener('click', function () {
+        try {
+          var p = isFull() ? exit() : enter();
+          if (p && p.catch) p.catch(function () {});
+        } catch (e) {}
+      });
+
+      function sync() {
+        var on = !!isFull();
+        btn.classList.toggle('is-full', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', on ? 'Exit full screen' : 'Enter full screen');
+        btn.setAttribute('title', on ? 'Exit full screen' : 'Full screen');
+      }
+      document.addEventListener('fullscreenchange', sync);
+      document.addEventListener('webkitfullscreenchange', sync);
+    })();
+  </script>
+
+</body>
+</html>
